@@ -1,0 +1,13 @@
+{
+    "name": "simonbengtsson/ajaxbridge",
+    "description": "Proxy to circumvent the cross origin policy",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Simon Bengtsson",
+            "email": "simonbengt@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {}
+}

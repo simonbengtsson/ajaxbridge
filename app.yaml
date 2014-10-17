@@ -1,0 +1,16 @@
+application: ajax-bridge
+version: 1
+runtime: php
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /example\.html
+  static_files: example.html
+  upload: example\.html
+
+- url: /tester.php
+  script: tester.php
+
+- url: .*
+  script: index.php
