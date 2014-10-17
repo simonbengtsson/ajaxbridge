@@ -23,13 +23,13 @@
             content: ''
         };
 
-        $.post('/', options, function (res) {
+        $.post('/', options,function (res) {
             $('#result').text(JSON.stringify(res, undefined, 2));
             $('pre code').each(function (i, block) {
                 hljs.highlightBlock(block);
             });
-        }).fail(function(res, r2, r3) {
-            $('#result').text('Error: ' + r2 + ' Status: ' + res.status);
+        }).fail(function (res, error) {
+            $('#result').text('Error: ' + error + ' Status: ' + res.status);
             console.log(res);
         });
 
@@ -67,6 +67,16 @@
             color: #555;
         }
 
+        a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #777;
+        }
+
     </style>
 </head>
 <body>
@@ -76,7 +86,7 @@
     <p>
         The purpose of AjaxBridge is to act as a proxy to circumvent the cross origin policy. It enables any javascript
         to send any request to any server and get the complete response back, including cookie headers.
-        Source and more information are found on github.
+        Source and more information are found on <a href="http://github.com/someatoms/ajaxbridge">github</a>.
     </p>
 
     <h4>Example usage:</h4>
