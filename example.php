@@ -12,7 +12,6 @@
 
     <script>
 
-        // Request example
         var options = {
             url: 'https://twitter.com/',
             method: 'GET',
@@ -37,7 +36,7 @@
 
     <style>
         body {
-            padding: 20px;
+            padding: 10px 20px;
             font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
         }
 

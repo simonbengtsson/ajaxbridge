@@ -3,7 +3,6 @@
 use AjaxBridge\AjaxBridge;
 
 $debug = false; // Getting response info
-$testUrl = "http://$_SERVER[HTTP_HOST]:$_SERVER[SERVER_PORT]?ajaxBridgeRequestTest=true";
 
 if ($debug && isset($_GET['ajaxBridgeRequestTest'])) {
 
@@ -24,9 +23,11 @@ if ($debug && isset($_GET['ajaxBridgeRequestTest'])) {
         case 'POST':
 
             require_once('src/AjaxBridge.php');
+            $testUrl = "http://$_SERVER[HTTP_HOST]:$_SERVER[SERVER_PORT]?ajaxBridgeRequestTest=true";
             $ab = new AjaxBridge();
 
             if ($debug) {
+                header('Content-Type: application/json');
                 $ab->execute(false);
                 $resp = $ab->getResponse();
                 $resp['request'] = json_decode(file_get_contents($testUrl, false, $ab->getContext()), true);
