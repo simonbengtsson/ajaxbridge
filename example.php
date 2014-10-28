@@ -4,25 +4,25 @@
     <meta charset="UTF-8">
     <title>AjaxBridge</title>
 
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/styles/default.min.css">
 
     <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
     <script>
 
         var options = {
-            url: 'https://twitter.com/',
-            method: 'GET',
+            url: 'https://se.timeedit.net/web/chalmers/db1/b1//',
+            method: 'POST',
             headers: {
-                'User-Agent': 'AjaxBridge',
-                'Other-Header': 'Value'
+                'Content-Type': "application/x-www-form-urlencoded",
+                'User-Agent': "AjaxBridge"
             },
-            content: ''
+            content: 'authServer=student&username=simbeng&password=hotvjs.32'
         };
 
-        $.post('/', options,function (res) {
+        $.post('/', options, function (res) {
             $('#result').text(JSON.stringify(res, undefined, 2));
             $('pre code').each(function (i, block) {
                 hljs.highlightBlock(block);
@@ -91,7 +91,7 @@
     <h4>Example usage:</h4>
 
 <pre><code>var options = {url: 'http://twitter.com'}
-$.post('http://ajax-bridge.appspot.com', options, function(res) {
+$.post('https://ajax-bridge.appspot.com', options, function(res) {
     console.log(res); // Response, see below
 });
 </code></pre>

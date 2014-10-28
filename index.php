@@ -2,19 +2,21 @@
 
 use AjaxBridge\AjaxBridge;
 
-$debug = false; // Getting response info
+$debug = true; // Getting response info
 
 if ($debug && isset($_GET['ajaxBridgeRequestTest'])) {
 
     header('Content-Type: application/json');
 
-    $res['content'] = file_get_contents("php://input");
-    $pp = $_SERVER['REQUEST_METHOD'] . ' ' . $_SERVER['REQUEST_URI'] . ' ' . $_SERVER['SERVER_PROTOCOL'];
-    $res = array_merge(array(0 => $pp), $res);
+    $res = $_SERVER;
+    $res['HTTP_CONTENT'] = file_get_contents("php://input");
 
     echo json_encode($res);
 
 } else {
+
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'GET':
@@ -23,20 +25,27 @@ if ($debug && isset($_GET['ajaxBridgeRequestTest'])) {
         case 'POST':
 
             require_once('src/AjaxBridge.php');
-            $testUrl = "http://$_SERVER[HTTP_HOST]:$_SERVER[SERVER_PORT]?ajaxBridgeRequestTest=true";
             $ab = new AjaxBridge();
 
             if ($debug) {
+
                 header('Content-Type: application/json');
                 $ab->execute(false);
                 $resp = $ab->getResponse();
+                $resp['request']['url'] = $ab->getUrl();
+
+                $protocol = $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+                $testUrl = "$protocol://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]?ajaxBridgeRequestTest=true";
                 $resp['request'] = json_decode(file_get_contents($testUrl, false, $ab->getContext()), true);
-                $resp['request']['headers'] = getallheaders();
+
                 echo json_encode($resp);
+
             } else {
                 $ab->execute();
             }
 
+            break;
+        case 'OPTIONS':
             break;
         default:
             http_response_code(400);

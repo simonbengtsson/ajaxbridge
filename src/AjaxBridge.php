@@ -34,14 +34,16 @@ class AjaxBridge
      */
     public function __construct()
     {
-        $this->url = $this->array_get($_POST, 'url', '');
+        set_error_handler(function() {});
+        $postData = json_decode(file_get_contents('php://input'), true) ? : $_POST;
+        $this->url = $this->array_get($postData, 'url', '');
 
         $this->context = stream_context_create([
             'http' => [
                 'follow_location' => 0,
-                'method' => $this->array_get($_POST, 'method', 'GET'),
-                'header' => $this->prepareHeaders($this->array_get($_POST, 'headers', '')),
-                'content' => $this->array_get($_POST, 'content', '')
+                'method' => $this->array_get($postData, 'method', 'GET'),
+                'header' => $this->prepareHeaders($this->array_get($postData, 'headers', '')),
+                'content' => $this->array_get($postData, 'content', '')
             ]
         ]);
     }
@@ -54,15 +56,22 @@ class AjaxBridge
     public function execute($echo = true)
     {
         header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+
+        if (!$this->url) {
+            echo 'No url entered';
+            http_response_code(400);
+            die();
+        }
 
         $data = file_get_contents($this->url, false, $this->context);
 
         // $http_response_header is set by file_get_contents
         $protocolParams = explode(' ', array_shift($http_response_header));
         $this->response = [
-            'protocol' => $protocolParams[0],
+            'requestUrl' => $this->url,
             'status' => intval($protocolParams[1]),
-            'statusText' => $protocolParams[2],
+            'statusText' => implode(' ', $protocolParams),
             'headers' => $this->prepareResponseHeaders($http_response_header),
             'content' => $data
         ];
@@ -85,6 +94,11 @@ class AjaxBridge
     public function getContext()
     {
         return $this->context;
+    }
+
+    public function getUrl()
+    {
+        return $this->url;
     }
 
     /**
