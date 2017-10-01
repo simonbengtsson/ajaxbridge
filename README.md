@@ -55,4 +55,7 @@ The simplest way to host your own AjaxBridge is to upload all the files in this 
 You might want to tweak index.php or example.php. If you want to use Google App Engine, you first have to create a new
 application in the [Google Cloud Console](https://console.developers.google.com/) and change the app.yaml` accordingly.
 
+### Google Cloud Deployment
+./google-cloud-sdk/bin/gcloud app deploy app.yaml --project ajax-bridge
+
 ### Licence: MIT

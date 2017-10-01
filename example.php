@@ -13,13 +13,13 @@
     <script>
 
         var options = {
-            url: 'https://se.timeedit.net/web/chalmers/db1/b1//',
-            method: 'POST',
+            url: 'https://twitter.com/',
+            method: 'GET',
             headers: {
-                'Content-Type': "application/x-www-form-urlencoded",
-                'User-Agent': "AjaxBridge"
+                'User-Agent': 'AjaxBridge',
+                'Other-Header': 'Value'
             },
-            content: 'authServer=student&username=simbeng&password=hotvjs.32'
+            content: ''
         };
 
         $.post('/', options, function (res) {
